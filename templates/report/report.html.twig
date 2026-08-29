@@ -1,0 +1,57 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    {{form_start(form) }}
+    <div class=" container m-auto text-right border-2 p-3 py-20 border-gray-50 shadow-2xl mt-52">
+        <div class="mb-6 mt-6">
+            {{form_label(form.month,"الشهر",{
+                '
+                label_attr' : {
+                    'class' : 'text-right block text-sm font-medium text-gray-700 mb-2'
+                }
+            })
+            }}
+
+            {{form_widget(form.month,{
+                'attr' : {
+                    'class' : 'w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200'
+                }
+            })
+            }}
+        </div>
+
+       <div class="mb-6 mt-6">
+            {{form_label(form.year,"السنة",{
+                '
+                label_attr' : {
+                    'class' : 'text-right block text-sm font-medium text-gray-700 mb-2'
+                }
+            })
+            }}
+
+            {{form_widget(form.year,{
+                'attr' : {
+                    'class' : 'w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200'
+                }
+            })
+            }}
+        </div>
+
+
+       <div class="mb-6 mt-6">
+
+            {{form_widget(form.submit,{
+                'attr' : {
+                    'class' : 'w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-green-900 text-gray-50'
+                }
+            })
+            }}
+        </div>
+        {# {{form_row(form.month) }}
+        {{form_row(form.year) }}
+        {{form_row(form.submit) }} #}
+    {{form_end(form) }}
+    <div>
+    {% include("elements/navbar.html.twig") %}
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Attendence{% endblock %}
+
+{% block body %}
+<div class="container m-auto">
+    <div class="text-center text-6xl my-5" >تعديل الحضور</div>
+
+    <div class=" mt-15 p-3 border-2 block m-auto border-gray-100 shadow" >
+        {{ include('attendence/_form.html.twig', {'button_label': 'Update'}) }}
+    </div>
+    {# {{ include('attendence/_delete_form.html.twig') }} #}
+    {{ include("elements/navbar.html.twig") }}
+</div>
+{% endblock %}

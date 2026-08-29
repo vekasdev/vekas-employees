@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Employee{% endblock %}
+
+{% block body %}
+    <h1 class="text-center my-13 text-5xl">اضافة موظف جديد</h1>
+
+    <div class="container m-auto p-4 border-2 border-gray-50 shadow-2xl py-10">
+        {{ include('employee/_form.html.twig') }}
+        {% include("elements/navbar.html.twig") %}
+    </div>
+
+{% endblock %}

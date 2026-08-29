@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Attendence index{% endblock %}
+
+{% block body %}
+    <h1>Attendence index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>CheckIn</th>
+                <th>CheckOut</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for attendence in attendences %}
+            <tr>
+                <td>{{ attendence.id }}</td>
+                <td>{{ attendence.date ? attendence.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ attendence.checkIn ? attendence.checkIn|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ attendence.checkOut ? attendence.checkOut|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_attendence_show', {'id': attendence.id}) }}">show</a>
+                    <a href="{{ path('app_attendence_edit', {'id': attendence.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_attendence_new') }}">Create new</a>
+{% endblock %}
