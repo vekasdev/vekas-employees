@@ -4,6 +4,8 @@ namespace App\Service;
 
 use App\Entity\Attendence;
 use App\Entity\Employee;
+use App\Factory\MonthDataFactory;
+use App\Model\MonthData;
 use App\Repository\AttendenceRepository;
 use App\Repository\EmployeeRepository;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
@@ -14,6 +16,7 @@ class ReportService {
     function __construct(
         private AttendenceRepository $attendenceRepository,
         private EmployeeRepository $employeeRepository,
+        private MonthDataFactory $monthDataFactory,
         private string $reportsDirectory
     )
     {
@@ -89,6 +92,12 @@ class ReportService {
         $xlsx->save("$this->reportsDirectory/$reportName.csv");
 
         return $this->reportsDirectory."/".$reportName.".csv";
+    }
+
+
+    function getEmployeeData(Employee $employee ,int $month,int $year) { 
+        $monthData = $this->monthDataFactory->createFromEmployee($employee,$year,$month);
+        return $monthData->getDays();
     }
 
 }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AttendenceRepository;
+use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AttendenceRepository::class)]
@@ -85,4 +87,17 @@ class Attendence
 
         return $this;
     }
+
+
+    /**
+     * check if given day is the same day as the attendence was never mind the time its created
+     * @param DateTimeImmutable $dateTime
+     * @return bool
+     */
+    function isSameDay(DateTimeImmutable $dateTime) {
+        $givenDate      = $dateTime->setTime(0,0,0,0);
+        $attendenceDate = $this->date->setTime(0,0,0,0);
+        return $givenDate->getTimestamp() == $attendenceDate->getTimestamp();
+    }
+
 }

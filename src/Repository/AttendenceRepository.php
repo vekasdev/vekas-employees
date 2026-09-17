@@ -25,6 +25,14 @@ class AttendenceRepository extends ServiceEntityRepository
     }
 
 
+    /**
+     * get attendenecies data by a specific month
+     * and year and by a specific employee if provided
+     * @param int $month
+     * @param int $year
+     * @param Employee|null $employee
+     * @return array<Attendence>
+     */
     function getByMonth(int $month,int $year,Employee | null $employee = null) {
         
         $start = new DateTimeImmutable(

@@ -3,24 +3,20 @@
 
 namespace  App\Controller;
 
+use App\Entity\Employee;
 use App\Form\ReportType;
 use App\Service\ReportService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
-
+#[Route("/report")]
 class ReportsController extends AbstractController {
     function __construct()
     {
         
     }
 
-    #[Route("/report/{month}/{year}","report_all",requirements:["month"=>"\d+","year"=>"\d+"])]
-    function makeReport(int $month,int $year,ReportService $reportService) {
-        $report = $reportService->getAllEmployeesReport($month,$year);
-        return $this->file($report,"report-file-$year-$month".uniqid().".csv");
-    }
 
     #[Route("/report/make",name:"submit_report")]
     function submitReport(Request $request) {
@@ -39,5 +35,26 @@ class ReportsController extends AbstractController {
             "form" => $form->createView()
         ]);
     }
+
+
+    /**
+     *  gives report of specific employee
+     */
+    #[Route("/empreport/{id}")]
+    function employeeReport(Employee $employee) {
+        
+    }
+
+
+    function overallReport() {
+
+    }
+
+    #[Route("/{month}/{year}","report_all",requirements:["month"=>"\d+","year"=>"\d+"])]
+    function makeReport(int $month,int $year,ReportService $reportService) {
+        $report = $reportService->getAllEmployeesReport($month,$year);
+        return $this->file($report,"report-file-$year-$month".uniqid().".csv");
+    }
+    
 
 }

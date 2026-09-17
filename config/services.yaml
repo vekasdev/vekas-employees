@@ -12,12 +12,17 @@ parameters:
 services:
     # default configuration for services in *this* file
     _defaults:
+        public: true
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/'
+        exclude: 
+            - '../src/untils/'
+            - '../src/Model/DayData.php'
+            - '../src/Model/MonthData.php'
     App\Service\ReportService:
         arguments:
             $reportsDirectory: '%reports_directory%'

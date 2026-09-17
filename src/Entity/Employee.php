@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\EmployeeRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -30,10 +31,20 @@ class Employee
     #[ORM\OneToMany(targetEntity: Attendence::class, mappedBy: 'employee', orphanRemoval: true ,cascade:["PERSIST"])]
     private Collection $attendences;
 
+    #[ORM\Column()]
+    private int $workingHours = 8;
+
+    /**
+     * @var Collection<int, DayOff>
+     */
+    #[ORM\ManyToMany(targetEntity: DayOff::class, mappedBy: 'employees',cascade:["PERSIST"])]
+    private Collection $dayOffs;
+
     public function __construct()
     {
         $this->attendences = new ArrayCollection();
         $this->employeeNumber = uniqid();
+        $this->dayOffs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -106,4 +117,60 @@ class Employee
 
         return $this;
     }
+
+    /**
+     * Get the value of workingHours
+     */ 
+    public function getWorkingHours()
+    {
+        return $this->workingHours;
+    }
+
+    /**
+     * Set the value of workingHours
+     *
+     * @return  self
+     */ 
+    public function setWorkingHours($workingHours)
+    {
+        $this->workingHours = $workingHours;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DayOff>
+     */
+    public function getDayOffs(): Collection
+    {
+        return $this->dayOffs;
+    }
+
+    public function addDayOff(DayOff $dayOff): static
+    {
+        if (!$this->dayOffs->contains($dayOff)) {
+            $this->dayOffs->add($dayOff);
+            $dayOff->addEmployee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDayOff(DayOff $dayOff): static
+    {
+        if ($this->dayOffs->removeElement($dayOff)) {
+            $dayOff->removeEmployee($this);
+        }
+
+        return $this;
+    }
+
+    function isDayOff(DateTimeImmutable $day) {
+        foreach($this->dayOffs as $dayOff) {
+            $res = isSameDay($day,$dayOff->getDate());
+            if ($res) return true;
+        }
+        return false;
+    }
+
 }

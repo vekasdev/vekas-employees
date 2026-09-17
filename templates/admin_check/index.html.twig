@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+    <h1 class="text-center my-13 text-5xl">يرجى التحقق من خلال الرمز</h1>
+    <div class="container m-auto p-4 border-2 border-gray-50 shadow-2xl py-10">
+
+        {{form_start(form) }}
+        <div class="my-4">
+            {{
+                form_label(form.password,'رمز الدخول',{
+                    "label_attr" : {
+                        'class' : "mb-3 block text-right"
+                    }
+                })
+            }}
+
+            {{
+                form_widget(form.password,{
+                    "attr" : {
+                        'class' : " mb-3 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                    }
+                })
+            }}
+            
+            {{
+                form_widget(form.submit,{
+                    "label" : "ادخال",
+                    "attr" : {
+                        'class' : " cursor-pointer btn w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-green-900 text-gray-50"
+                    }
+                })
+            }}
+            {# <button type="submit" class="cursor-pointer btn w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-green-900 text-gray-50" > ادخال</button> #}
+        </div>
+        {{ form_end(form) }}
+    {{include("elements/navbar.html.twig") }}
+    </div>
+
+{% endblock %}

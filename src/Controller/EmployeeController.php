@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Employee;
+use App\Form\AdminCheckType;
 use App\Form\EmployeeType;
 use App\Repository\EmployeeRepository;
 use DateTime;
@@ -46,6 +47,30 @@ final class EmployeeController extends AbstractController
         ]);
     }
 
+    #[Route("/admin_auth",name:"employee_admin_check")]
+    public function adminCheck(Request $request) {
+
+        $form = $this->createForm(AdminCheckType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $password = $form->getData()["password"];
+            if ($password == "abc123") {
+                $session = $request->getSession();
+                $session->set("isAdmin",true);
+          
+                return $this->redirectToRoute("app_employee_index");
+            }
+        }
+
+        return $this->render(
+            "/admin_check/index.html.twig",[
+                "form" => $form->createView()
+            ]
+        );
+
+    }
+    
     #[Route('/{id}', name: 'app_employee_show', methods: ['GET'])]
     public function show(Employee $employee): Response
     {
@@ -79,7 +104,9 @@ final class EmployeeController extends AbstractController
             $entityManager->remove($employee);
             $entityManager->flush();
         }
-
         return $this->redirectToRoute('app_employee_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+
 }
