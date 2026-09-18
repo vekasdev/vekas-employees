@@ -1,3 +1,2 @@
 services:
-    Doctrine\ORM\EntityManagerInterface:
-        public: true
+    

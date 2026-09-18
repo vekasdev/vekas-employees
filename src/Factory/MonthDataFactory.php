@@ -43,7 +43,6 @@ class MonthDataFactory {
                     $dayData->setOff(true);
                 }
             }
-
         }
 
         return $monthData; 

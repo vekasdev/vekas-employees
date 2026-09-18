@@ -18,25 +18,11 @@ class WorkdayService {
         private DayOffRepository $dayOffRepository,
         private MonthRepository $monthRepository,
         private EntityManagerInterface $em,
-        private DayOffService $dayOffService
+        private DayOffService $dayOffService,
+        private MonthService $monthService
     )
     {}
 
-    /**
-     * create a day offs according to the WeeklyDayOff entity
-     * @return bool|mixed|Month
-     */
-    function initMonth() : Month {
-        $now = new DateTimeImmutable();
-        $month = $this->monthRepository->findByDate($now);
-        if (count($month)) {
-            return end($month);
-        }
-        $month = $this->monthRepository->create(new DateTimeImmutable());
-        $this->em->persist($month);
-        $this->em->flush();
-        return $month;
-    }
 
     /**
      * iterate over weeklydayoff and create dayOffs records
@@ -44,7 +30,7 @@ class WorkdayService {
      */
     function updateMonthDayOff() {
 
-        $monthEntity = $this->initMonth();
+        $monthEntity = $this->monthService->initMonth();
         if ($monthEntity->isDayOffPopulated()) {
             return;
         }

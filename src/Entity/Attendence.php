@@ -76,6 +76,10 @@ class Attendence
         return $this;
     }
 
+    function isCompleted() {
+        return $this->getWorkingHours() >= $this->employee->getWorkingHours();
+    }
+
     public function getCheckOut(): ?\DateTimeImmutable
     {
         return $this->checkOut;

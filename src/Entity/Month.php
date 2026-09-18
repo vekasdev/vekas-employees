@@ -24,6 +24,15 @@ class Month
     {
         $this->isDayOffPopulated = false;
     }
+
+    function getMonthSequence() {
+        return $this->date->format("m");
+    }
+
+    function getMonthName() {
+        return $this->date->format("F");
+    }
+
     public function getId(): ?int
     {
         return $this->id;

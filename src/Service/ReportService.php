@@ -40,15 +40,6 @@ class ReportService {
 
             $totalWorkingHours += $workingHours;
 
-            // $data[$attendence->getDate()->format("Y-m-d")] = [
-            //     "day" => $day,
-            //     "working-hours" => $workingHours,
-            //     "check-in" => $checkIn,
-            //     "check-out" => $checkOut,
-            //     "isEligitimate" => $isEligitimate ? "yes" : "no",
-            //     "extra-hours" => $extraHours
-            // ];
-            // ["employee","day","working-hours","check-in","check-out","isEligitimate","extra-hours"]
             $data = [];
             $data[] = $employee->getFirstName()." ".$employee->getLastName();
             $data[] = $day;
@@ -62,10 +53,7 @@ class ReportService {
 
         }
 
-        
         return $finalData;
-
-        // $data["total-working-hours"] = $totalWorkingHours;4
     }
 
     function getAllEmployeesReport(int $month,int $year) {
@@ -99,5 +87,7 @@ class ReportService {
         $monthData = $this->monthDataFactory->createFromEmployee($employee,$year,$month);
         return $monthData->getDays();
     }
+
+    
 
 }

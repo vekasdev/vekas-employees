@@ -9,3 +9,10 @@
 
 controllers:
     resource: routing.controllers
+
+root_redirect:
+    path: /
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::RedirectAction
+    defaults:
+        route: app_employee_index
+        permanent: true

@@ -62,14 +62,6 @@ final class AttendenceController extends AbstractController
     #[Route('/{id}/edit', name: 'app_attendence_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Attendence $attendence, EntityManagerInterface $entityManager): Response
     {
-
-        $session = $request->getSession();
-        $isAdmin = $session->get("isAdmin");
-
-        if (!$isAdmin) {
-            return $this->redirectToRoute("employee_admin_check");
-        }
-
         $form = $this->createForm(AttendenceType::class, $attendence);
         $form->handleRequest($request);
 

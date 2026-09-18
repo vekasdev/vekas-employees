@@ -13,14 +13,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[Route("/employee")]
 final class EmployeeController extends AbstractController
 {
     #[Route(name: 'app_employee_index', methods: ['GET'])]
     public function index(EmployeeRepository $employeeRepository): Response
     {
-
+        $this->denyAccessUnlessGranted("ROLE_USER");
         $date = new DateTime();
-
         return $this->render('employee/index.html.twig', [
             'employees' => $employeeRepository->findAll(),
             'date' => $date->format("Y-m-d")
@@ -47,30 +47,6 @@ final class EmployeeController extends AbstractController
         ]);
     }
 
-    #[Route("/admin_auth",name:"employee_admin_check")]
-    public function adminCheck(Request $request) {
-
-        $form = $this->createForm(AdminCheckType::class);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $password = $form->getData()["password"];
-            if ($password == "abc123") {
-                $session = $request->getSession();
-                $session->set("isAdmin",true);
-          
-                return $this->redirectToRoute("app_employee_index");
-            }
-        }
-
-        return $this->render(
-            "/admin_check/index.html.twig",[
-                "form" => $form->createView()
-            ]
-        );
-
-    }
-    
     #[Route('/{id}', name: 'app_employee_show', methods: ['GET'])]
     public function show(Employee $employee): Response
     {

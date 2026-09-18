@@ -34,6 +34,17 @@ class MonthRepository extends ServiceEntityRepository
         $month->setDate($date);
         return $month;
     }
+    
+
+    /**
+     * 
+     * @return Month[]
+     */
+    function findAllOrdered() {
+        $qb = $this->createQueryBuilder("m");
+       return  $qb->orderBy("m.date")
+        ->getQuery()->getResult();
+    }
 
     //    /**
     //     * @return Month[] Returns an array of Month objects

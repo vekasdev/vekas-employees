@@ -7,9 +7,9 @@ use App\Factory\EmployeeFactory;
 use App\Factory\WeeklyDayOffFactory;
 use App\Repository\DayOffRepository;
 use App\Repository\MonthRepository;
+use App\Service\MonthService;
 use App\Service\ReportService;
 use App\Service\WorkdayService;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
 use Psr\Container\ContainerInterface;
@@ -22,6 +22,7 @@ class WorkdayServiceTest extends KernelTestCase
 
     private WorkdayService $workdayService ;
     private EntityManagerInterface $em;
+    private MonthService $monthService;
     private ContainerInterface $container;
 
     #[Override]
@@ -31,16 +32,15 @@ class WorkdayServiceTest extends KernelTestCase
         $kernel = self::bootKernel();
         $this->container = $kernel->getContainer();
         $this->em = $this->container->get("doctrine")->getManager();
+        $this->monthService = $this->container->get(MonthService::class);
         $this->workdayService = $this->container->get(WorkdayService::class);
     }
 
     function test_init_month() {
-        // $this->assertTrue(true);
         $fridayOff = WeeklyDayOffFactory::createOne([
             "day" => WeekDaysEnum::FRIDAY
         ]);
-
-        $this->workdayService->initMonth();
+        $this->monthService->initMonth();
         $monthRepo = $this->container->get(MonthRepository::class);
         $month = $monthRepo->findAll()[0];
         $this->assertNotNull($month->getDate());
@@ -54,13 +54,19 @@ class WorkdayServiceTest extends KernelTestCase
             "day" => WeekDaysEnum::FRIDAY
         ]);
 
-        EmployeeFactory::createMany(3);
+        $employee1 = EmployeeFactory::createOne();
+        $employee2 = EmployeeFactory::createOne();
+        $employee3 = EmployeeFactory::createOne();
 
-        $this->workdayService->initMonth();
+        $this->monthService->initMonth();
 
         $this->workdayService->updateMonthDayOff();
 
         $daysOff = $dayOffRepo->findAll();
+
+        $this->assertCount(4,$employee1->getDayOffs());
+        $this->assertCount(4,$employee2->getDayOffs());
+        $this->assertCount(4,$employee3->getDayOffs());
 
         $this->assertCount(4,$daysOff);
 

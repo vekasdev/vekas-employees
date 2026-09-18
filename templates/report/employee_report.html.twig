@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}employee report{% endblock %}
+
+{% block body %}
+    <div class="container m-auto h-screen">
+    <h1 class="text-center text-6xl my-8">report for {{employee.getFirstName }}</h1>
+
+    <table class="text-left w-full border-2 border-gray-400 table-auto overflow-hidden">
+        <thead  class="bg-gray-200 border-b-2 border-b-gray-400">
+            <tr>
+                <th class="p-3 text-sm font-semibold tracking-wide">اليوم</th>
+                <th class="p-3 text-sm font-semibold tracking-wide">التاريح</th>
+                <th class="p-3 text-sm font-semibold">وقت الحضور</th>
+                <th class="p-3 text-sm font-semibold">وقت الانصراف</th>
+                <th class="p-3 text-sm font-semibold"> ساعات العمل </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for day in days %}
+
+            {%
+                set isComplete = 
+                day.attendence is not null
+                and day.attendence.checkIn is not null
+                and day.attendence.checkOut is not null
+                and day.attendence.isCompleted()
+
+             %}
+
+             {%
+                set isDayOff = employee.isDayOff(day.date)
+            %}
+
+             {% if isDayOff %}
+                <tr class="bg-yellow-800 text-yellow-200 hover:bg-gray-700 group  hover:text-gray-50 {{ loop.index is odd ? 'bg-gray-200' :'' }}">
+                <td colspan="5" class="whitespace-nowrap group-hover:text-gray-50 p-3 text-sm">day off</td>
+             {% else %}
+                <tr class="
+            {{ isComplete ? '' : 'bg-red-700 text-red-300' }}
+             hover:bg-gray-700 group  hover:text-gray-50 {{ loop.index is odd ? 'bg-gray-200' :'' }}">
+
+                <td class="whitespace-nowrap group-hover:text-gray-50 p-3 text-sm">{{ day.date.format("l") }}</td>
+                <td class="whitespace-nowrap group-hover:text-gray-50 p-3 text-sm">{{ day.date|date("Y-m-d","Asia/Baghdad") }}</td>
+                <td class="whitespace-nowrap group-hover:text-gray-50 p-3 text-sm">{{ day.attendence and day.attendence.checkIn !== null ? day.attendence.checkIn|date("H-i-s","Asia/Baghdad") : "غائب"  }}</td>
+                <td class="whitespace-nowrap group-hover:text-gray-50 p-3 text-sm">{{ day.attendence and day.attendence.checkOut !== null ? day.attendence.checkOut|date("H-i-s","Asia/Baghdad") : "غائب"  }}</td>
+                <td class="whitespace-nowrap group-hover:text-gray-50 p-3 text-sm">{{ day.attendence and day.attendence.checkOut !== null ? day.attendence.workingHours : "-" }}</td>
+             {% endif %}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% include("elements/navbar.html.twig") %}
+{% endblock %}
