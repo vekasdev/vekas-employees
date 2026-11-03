@@ -23,7 +23,6 @@ class WorkdayService {
     )
     {}
 
-
     /**
      * iterate over weeklydayoff and create dayOffs records
      * @return void
@@ -31,14 +30,19 @@ class WorkdayService {
     function updateMonthDayOff() {
 
         $monthEntity = $this->monthService->initMonth();
+
         if ($monthEntity->isDayOffPopulated()) {
             return;
         }
+
         $now = new DateTime();
         $year = (int) $now->format("Y");
         $month = (int) $now->format("m");
         $weeklyDaysOff = $this->weeklyDayOffRepository->findAll();
         $days = DaysScanner::scan($year,$month);
+
+        // in order to track if the month day offs are already populated or not
+        $dayOffsRegisteredCount = 0;
 
         foreach($days as $day) {
             /** @var WeeklyDayOff */
@@ -50,13 +54,19 @@ class WorkdayService {
                         continue;
                     }
                     $dayOff = $this->dayOffService->create($day);
+
+                    // increase the number to ensure that the month day offs populated if it more than 0
+                    $dayOffsRegisteredCount++;
                 }              
             }
         }
         
-        $monthEntity->setIsDayOffPopulated(true);
-        $this->em->persist($monthEntity);
-        $this->em->flush();
+        if ($dayOffsRegisteredCount) {
+            $monthEntity->setIsDayOffPopulated(true);
+            $this->em->persist($monthEntity);
+            $this->em->flush();
+        }
+
     }
 
 }

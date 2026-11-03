@@ -2,11 +2,15 @@
 
 namespace App\Service;
 
+use App\Entity\Attendence;
 use App\Entity\Employee;
 use App\Repository\AttendenceRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use DomainException;
+use Exception;
+use LogicException;
 
 class AttendenceService {
     function __construct(
@@ -63,6 +67,18 @@ class AttendenceService {
         $this->entityManager->persist($employee);
         $this->entityManager->flush();
         return $attendence;
+    }
+
+    static function isAttendenceLate(Attendence $attendence) {
+        $checkIn = $attendence->getCheckIn();
+        $employee = $attendence->getEmployee();
+        if ($checkIn == null ) {
+            throw new LogicException("Cannot determine lateness because the employee has not checked in.");
+        }
+        $checkIn = $checkIn->setDate(0,0,0);
+        $workStartTime = ($employee->getWorkStartTime())->setDate(0,0,0);
+
+        return $checkIn->getTimestamp() > $workStartTime->getTimestamp();
     }
 
 }

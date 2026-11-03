@@ -3,9 +3,11 @@
 {% block title %}Hello LoginController!{% endblock %}
 
 {% block body %}
-    <form  action="{{path('app_login')}}" method="post">
-        <input name="_username" value="{{lastIdentifier}}">
-        <input name="_password">
-        <input type="submit">
-    </form>
+    <div class="h-screen w-screen flex justify-center  items-center">
+        <form  class=" w-1/2 flex  gap-1.5 flex-col" action="{{path('app_login')}}" method="post">
+            <input placeholder="user" class="p-1 rounded-2xl border-2 border-gray-300" name="_username" value="{{lastIdentifier}}">
+            <input placeholder="pass key" class=" p-1 rounded-2xl border-2 border-gray-300" name="_password">
+            <input class="p-1 rounded-2xl border-2 border-gray-300" type="submit" value="تسجيل الدخول">
+        </form>
+    </div>
 {% endblock %}

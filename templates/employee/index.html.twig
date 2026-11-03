@@ -3,20 +3,20 @@
 {% block title %}Employee index{% endblock %}
 
 {% block body %}
-    <div class="container m-auto h-screen">
-    <h1 class="text-center text-6xl my-8">اليوم : {{date}}</h1>
+    <h1 class="text-center text-4xl my-8">اليوم : {{date}}</h1>
 
-    <table class="text-left w-full border-2 border-gray-400 table-auto overflow-hidden">
+    <table class="rounded-lg text-left w-full  border-gray-400 table-auto overflow-hidden">
         <thead  class="bg-gray-200 border-b-2 border-b-gray-400">
-            <tr>
-                <th class="p-3 text-sm font-semibold tracking-wide">رقم الموظف</th>
-                <th class="p-3 text-sm font-semibold">الاسم</th>
-                <th class="p-3 text-sm font-semibold">وقت الحضور</th>
-                <th class="p-3 text-sm font-semibold">وقت الانصراف</th>
-                <th class="p-3 text-sm font-semibold"> ساعات العمل </th>
-                <th class="p-3 text-sm font-semibold"> مستوفي </th>
-                <th class="p-3 text-sm font-semibold">الموظف</th>
-                <th class="p-3 text-sm font-semibold"> تاريخ الحضور</th>
+            <tr class="text-sm font-regular text-center">
+                <th class="p-3">رقم الموظف</th>
+                <th class="p-3">الاسم</th>
+                <th class="p-3">وقت الحضور</th>
+                <th class="p-3">وقت الانصراف</th>
+                <th class="p-3"> ساعات العمل </th>
+                <th class="p-3"> مستوفي </th>
+                <th class="p-3">الموظف</th>
+                <th class="p-3"> تاريخ الحضور</th>
+                <th class="p-3"> عمل تقرير</th>
             </tr>
         </thead>
         <tbody>
@@ -26,10 +26,10 @@
                 <td class="whitespace-nowrap group-hover:text-gray-50 p-3 text-sm text-blue-600 ">{{ employee.employeeNumber }}</td>
                 <td class=" whitespace-nowrap p-3 text-sm">{{ employee.firstName ~ employee.lastName }}</td>
                 <td class=" whitespace-nowrap {{todayAttendence ?  ( todayAttendence.checkIn ? '' : '' ) : '' }}">
-                    <a  class="p-3 text-sm  bg-orange-800 text-orange-200 rounded-sm" href="{{path('check-in',{'employee': employee.id })}}">{{ todayAttendence ?  ( todayAttendence.checkIn ? todayAttendence.checkIn|date('h:i A', 'Asia/Baghdad')  :  "اضغط هنا" ) :  "اضغط هنا" }}
+                    <a  class="p-3 text-sm   rounded-sm" >{{ todayAttendence ?  ( todayAttendence.checkIn ? todayAttendence.checkIn|date('h:i A', 'Asia/Baghdad')  :  "--" ) :  "--" }}
                     </a>
                 </td>
-                <td class=" whitespace-nowrap  "><a class="p-3 text-sm  bg-green-900 text-green-200 rounded-sm" href="{{path('check-out',{'employee': employee.id })}}">{{ todayAttendence ?  ( todayAttendence.checkOut ? todayAttendence.checkOut|date('h:i A', 'Asia/Baghdad') :  "اضغط هنا" ) :  "اضغط هنا" }}</a></td>
+                <td class=" whitespace-nowrap  "><a class="p-3 text-sm  rounded-sm">{{ todayAttendence ?  ( todayAttendence.checkOut ? todayAttendence.checkOut|date('h:i A', 'Asia/Baghdad') :  "--" ) :  "--" }}</a></td>
                 <td class=" whitespace-nowrap p-3 text-sm"> {{ todayAttendence.getWorkingHours() | number_format(2) }} </td>
                 <td class=" whitespace-nowrap p-3 text-sm"> {{ (todayAttendence.getWorkingHours() | number_format(2))  >= 8 ? "مستوفي":  "غير مستوفي" }} </td>
                 <td class=" whitespace-nowrap p-3 text-sm">
@@ -37,6 +37,9 @@
                 </td>
                 <td class=" whitespace-nowrap p-3 text-sm">
                     <a href="{{ path('app_attendence_edit', {'id': todayAttendence.id}) }}">تعديل</a>
+                </td>
+                <td class=" whitespace-nowrap p-3 text-sm">
+                    <a href="{{ path('report_employee_choose', {'id': employee.id}) }}">تقرير شهري</a>
                 </td>
             </tr>
         {% else %}
@@ -46,5 +49,4 @@
         {% endfor %}
         </tbody>
     </table>
-    {% include("elements/navbar.html.twig") %}
 {% endblock %}

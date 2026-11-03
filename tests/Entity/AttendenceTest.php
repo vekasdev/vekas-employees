@@ -24,7 +24,6 @@ class AttendenceTest extends KernelTestCase
 
     function testIsCompleteFunction() {
         $employee = EmployeeFactory::createOne([
-            "workingHours" => 8
         ]);
 
         $attendence = AttendenceFactory::createOne([

@@ -26,6 +26,22 @@ class EmployeeTest extends KernelTestCase
         $this->assertTrue($employee->isDayOff(new DateTimeImmutable()));
         $this->assertFalse($employee->isDayOff(new DateTimeImmutable("+1 day")));
         $this->assertTrue($employee->isDayOff(new DateTimeImmutable("2023-3-4")));
+    }
+
+
+    function test_get_working_hours(){
+        // 8 hours
+        $employee = new Employee;
+        $employee->setWorkStartTime((new DateTimeImmutable())->setTime(9,0,0));
+        $employee->setWorkEndTime((new DateTimeImmutable())->setTime(17,0,0));
+        $this->assertSame(8,$employee->getWorkingHours());
+
+        // 10 hours
+        $employee2 = new Employee;
+        $employee2->setWorkStartTime((new DateTimeImmutable())->setTime(9,0,0));
+        $employee2->setWorkEndTime((new DateTimeImmutable())->setTime(19,0,0));
+        $this->assertSame(10,$employee2->getWorkingHours());
 
     }
+
 }

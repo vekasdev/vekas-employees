@@ -32,18 +32,6 @@ class ReportsServiceTest extends KernelTestCase
         $this->reportsService = $container->get(ReportService::class);
         parent::setUp();
     }
-    public function testSomething(): void
-    {
-        $kernel = self::bootKernel();
-
-        $container = $kernel->getContainer();
-
-        $reportsService = $container->get(ReportService::class);
-
-        $this->assertSame('test', $kernel->getEnvironment());
-        // $routerService = static::getContainer()->get('router');
-        // $myCustomService = static::getContainer()->get(CustomService::class);
-    }
 
     function test_get_employee_data_for_specific_month(){
         $data = $this->reportsService->getEmployeeData($this->dataLoad(),9,2026);     
@@ -51,7 +39,6 @@ class ReportsServiceTest extends KernelTestCase
         $this->assertNotNull($data[0]->getAttendence());
         $this->assertTrue(true);
     }
-
 
     function dataLoad(){    
         $employee = EmployeeFactory::createOne();

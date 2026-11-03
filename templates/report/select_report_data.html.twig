@@ -1,0 +1,27 @@
+{% extends "base.html.twig" %} 
+
+{% block body %}
+    <div class="flex h-screen w-screen justify-center align-center">
+        <div class="flex flex-col  w-10/12 justify-center items-center">
+        {{ form_start(form) }}
+                <div class="flex  p-2  w-sm gap-6 items-center justify-start ">
+                    <label class=" whitespace-nowrap">year : </label>
+                    {{ form_widget(form.years,{
+                        "attr" : {
+                            "class" : "w-2xl p-2 border-2 border-gray-300 rounded-2xl"
+                        }
+                    }) }}
+                </div>
+                <div class="flex  p-2  w-sm gap-6 items-center justify-start ">
+                    <label class=" whitespace-nowrap">month : </label>
+                    {{ form_widget(form.months,{
+                        "attr" : {
+                            "class" : "w-2xl p-2 border-2 border-gray-300 rounded-2xl"
+                        }
+                    }) }}
+                </div>
+                <button class="w-full p-2 bg-green-900 text-green-200 rounded-2xl"> report  </button>
+        {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

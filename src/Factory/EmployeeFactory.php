@@ -3,6 +3,7 @@
 namespace App\Factory;
 
 use App\Entity\Employee;
+use DateTimeImmutable;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
 /**
@@ -37,7 +38,10 @@ final class EmployeeFactory extends PersistentProxyObjectFactory
             'employeeNumber' => self::faker()->text(50),
             'firstName' => self::faker()->text(255),
             'lastName' => self::faker()->text(255),
-            'workingHours' => self::faker()->randomNumber(),
+            // 'workingHours' => self::faker()->randomNumber(),
+            "occupation" => self::faker()->text(255),
+            "workStartTime" => DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
+            "workEndTime" => DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
         ];
     }
 

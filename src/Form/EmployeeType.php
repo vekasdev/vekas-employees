@@ -15,6 +15,10 @@ class EmployeeType extends AbstractType
         $builder
             ->add('firstName')
             ->add('lastName')
+            // ->add("workingHours")
+            ->add("occupation")
+            ->add("workStartTime")
+            ->add("workEndTime")
             ->add("submit",SubmitType::class)
         ;
     }

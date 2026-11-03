@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}WeeklyDayOff{% endblock %}
+
+{% block body %}
+    <h1>WeeklyDayOff</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ weekly_day_off.id }}</td>
+            </tr>
+            <tr>
+                <th>Day</th>
+                <td>{{ weekly_day_off.day.value }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_weekly_day_off_index') }}">back to list</a>
+
+    <a href="{{ path('app_weekly_day_off_edit', {'id': weekly_day_off.id}) }}">edit</a>
+
+    {{ include('weekly_day_off/_delete_form.html.twig') }}
+{% endblock %}

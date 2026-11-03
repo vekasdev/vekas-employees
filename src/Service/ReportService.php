@@ -50,9 +50,7 @@ class ReportService {
             $data[] = (string) $extraHours;
 
             $finalData[] = $data;
-
         }
-
         return $finalData;
     }
 
@@ -82,10 +80,13 @@ class ReportService {
         return $this->reportsDirectory."/".$reportName.".csv";
     }
 
-
     function getEmployeeData(Employee $employee ,int $month,int $year) { 
         $monthData = $this->monthDataFactory->createFromEmployee($employee,$year,$month);
         return $monthData->getDays();
+    }
+
+    function getEmployeeStatisticsForMonth() {
+
     }
 
     

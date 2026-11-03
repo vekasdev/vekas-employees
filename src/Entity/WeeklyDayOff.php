@@ -15,7 +15,7 @@ class WeeklyDayOff
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(enumType: WeekDaysEnum::class)]
+    #[ORM\Column(enumType: WeekDaysEnum::class,unique:true)]
     private ?WeekDaysEnum $day = null;
 
     public function getId(): ?int

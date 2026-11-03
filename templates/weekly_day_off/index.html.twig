@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}WeeklyDayOff index{% endblock %}
+
+{% block body %}
+ <div class="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-white shadow-md rounded-lg bg-clip-border">
+  <table class="w-full text-left table-auto min-w-max">
+    <thead>
+      <tr>
+        <th class="p-4 border-b border-slate-300 bg-slate-50">
+          <p class="block text-sm font-normal leading-none text-slate-500">
+            id
+          </p>
+        </th>
+        <th class="p-4 border-b border-slate-300 bg-slate-50">
+          <p class="block text-sm font-normal leading-none text-slate-500">
+            day
+          </p>
+        </th>
+        <th class="p-4 border-b border-slate-300 bg-slate-50">
+          <p class="block text-sm font-normal leading-none text-slate-500">
+            remove
+          </p>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for weekly_day_off in weekly_day_offs %}     
+      <tr class="hover:bg-slate-50">
+        <td class="p-4 border-b border-slate-200">
+          <p class="block text-sm text-slate-800">
+            {{ weekly_day_off.id }}
+          </p>
+        </td>
+        <td class="p-4 border-b border-slate-200">
+          <p class="block text-sm text-slate-800">
+            {{ weekly_day_off.day.value }}
+          </p>
+        </td>
+        <td class="p-4 border-b border-slate-200"> 
+          <a href="{{ path('app_weekly_day_off_delete', {'id' : weekly_day_off.id } ) }}" class="block text-sm text-red-600">
+            x
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <a class="py-3 px-4 bg-sky-900 text-sky-200 font-semibold" href="{{ path('app_weekly_day_off_new') }}">Create new</a>
+</div>
+ 
+
+
+{% endblock %}

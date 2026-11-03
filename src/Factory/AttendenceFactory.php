@@ -3,6 +3,7 @@
 namespace App\Factory;
 
 use App\Entity\Attendence;
+use DateTimeImmutable;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
 /**
@@ -36,6 +37,7 @@ final class AttendenceFactory extends PersistentProxyObjectFactory
         return [
             'date' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
             'employee' => EmployeeFactory::new(),
+            "checkIn" => DateTimeImmutable::createFromMutable(self::faker()->dateTime())
         ];
     }
 

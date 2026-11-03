@@ -17,6 +17,11 @@ class DayOffService {
     )
     {}
 
+    /**
+     * create a day off and populate it to all employees registerd at the system
+     * @param DateTimeImmutable $day
+     * @return \App\Entity\DayOff
+     */
     function create(DateTimeImmutable $day) {
         $dayOff = $this->dayOffRepository->create($day);
         

@@ -6,6 +6,7 @@ use App\Repository\EmployeeRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EmployeeRepository::class)]
@@ -22,6 +23,12 @@ class Employee
     #[ORM\Column(length: 255)]
     private ?string $firstName = null;
 
+    #[ORM\Column(type:Types::TIME_IMMUTABLE)]
+    private ?DateTimeImmutable $workStartTime = null;
+
+    #[ORM\Column(type:Types::TIME_IMMUTABLE)]
+    private ?DateTimeImmutable $workEndTime = null;
+
     #[ORM\Column(length: 255)]
     private ?string $lastName = null;
 
@@ -31,14 +38,17 @@ class Employee
     #[ORM\OneToMany(targetEntity: Attendence::class, mappedBy: 'employee', orphanRemoval: true ,cascade:["PERSIST"])]
     private Collection $attendences;
 
-    #[ORM\Column()]
-    private int $workingHours = 8;
+    // #[ORM\Column(options:["default"=>8])]
+    // private int $workingHours = 8;
 
     /**
      * @var Collection<int, DayOff>
      */
     #[ORM\ManyToMany(targetEntity: DayOff::class, mappedBy: 'employees',cascade:["PERSIST"])]
     private Collection $dayOffs;
+
+    #[ORM\Column(length: 255,nullable:true)]
+    private ?string $occupation = null;
 
     public function __construct()
     {
@@ -123,20 +133,20 @@ class Employee
      */ 
     public function getWorkingHours()
     {
-        return $this->workingHours;
+        return ( $this->workEndTime->getTimestamp() - $this->workStartTime->getTimestamp() ) / 3600 ;
     }
 
-    /**
-     * Set the value of workingHours
-     *
-     * @return  self
-     */ 
-    public function setWorkingHours($workingHours)
-    {
-        $this->workingHours = $workingHours;
+    // /**
+    //  * Set the value of workingHours
+    //  *
+    //  * @return  self
+    //  */ 
+    // public function setWorkingHours($workingHours)
+    // {
+    //     $this->workingHours = $workingHours;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * @return Collection<int, DayOff>
@@ -174,4 +184,55 @@ class Employee
         return false;
     }
 
+    public function getOccupation(): ?string
+    {
+        return $this->occupation;
+    }
+
+    public function setOccupation(string $occupation): static
+    {
+        $this->occupation = $occupation;
+
+        return $this;
+    }
+
+
+    /**
+     * Get the value of workStartTime
+     */ 
+    public function getWorkStartTime()
+    {
+        return $this->workStartTime;
+    }
+
+    /**
+     * Set the value of workStartTime
+     *
+     * @return  self
+     */ 
+    public function setWorkStartTime(DateTimeImmutable $workStartTime)
+    {
+        $this->workStartTime = $workStartTime;
+        return $this;
+    }
+
+    /**
+     * Get the value of workEndTime
+     */ 
+    public function getWorkEndTime()
+    {
+        return $this->workEndTime;
+    }
+
+    /**
+     * Set the value of workEndTime
+     *
+     * @return  self
+     */ 
+    public function setWorkEndTime($workEndTime)
+    {
+        $this->workEndTime = $workEndTime;
+
+        return $this;
+    }
 }

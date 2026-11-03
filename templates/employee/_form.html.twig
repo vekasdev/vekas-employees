@@ -34,12 +34,87 @@
                     }
                 })
             }}
+
         </div>
+
+        {# <div class="my-4">
+            {{
+                form_label(form.workingHours,'ساعات العمل',{
+                    "label_attr" : {
+                        'class' : "mb-3 block"
+                    }
+                })
+            }}
+
+            {{
+                form_widget(form.workingHours,{
+                    "attr" : {
+                        'class' : "w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                    }
+                })
+            }}
+        </div> #}
+
+        <div class="my-4">
+            {{
+                form_label(form.occupation,'الوظيفة الحالية',{
+                    "label_attr" : {
+                        'class' : "mb-3 block"
+                    }
+                })
+            }}
+
+            {{
+                form_widget(form.occupation,{
+                    "attr" : {
+                        'class' : "w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                    }
+                })
+            }}
+        </div>
+
+        <div class="my-4">
+            {{
+                form_label(form.workStartTime,'تاريخ الحضور',{
+                    "label_attr" : {
+                        'class' : "mb-3 block"
+                    }
+                })
+            }}
+
+            {{
+                form_widget(form.workStartTime,{
+                    "attr" : {
+                        'class' : "w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                    }
+                })
+            }}
+        </div>
+
+        <div class="my-4">
+            {{
+                form_label(form.workEndTime,'تاريخ الانصراف',{
+                    "label_attr" : {
+                        'class' : "mb-3 block"
+                    }
+                })
+            }}
+
+            {{
+                form_widget(form.workEndTime,{
+                    "attr" : {
+                        'class' : "w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                    }
+                })
+            }}
+        </div>
+
 
         <div class="my-4">
        
             {{
                 form_widget(form.submit,{
+                "label" : "اضافة",
                 'attr' : {
                     'class' : 'w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-green-900 text-gray-50'
                 }

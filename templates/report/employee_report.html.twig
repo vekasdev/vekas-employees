@@ -2,11 +2,53 @@
 
 {% block title %}employee report{% endblock %}
 
-{% block body %}
-    <div class="container m-auto h-screen">
+{% block body %} 
+    <div class=" w-full container m-auto h-screen">
     <h1 class="text-center text-6xl my-8">report for {{employee.getFirstName }}</h1>
 
-    <table class="text-left w-full border-2 border-gray-400 table-auto overflow-hidden">
+    <div class="flex w-full gap-4 justify-around mb-8">
+        <div class="flex flex-col bg-gray-300 p-4 rounded-2xl w-80 border-[1px] border-gray-800">
+            <div class="flex  justify-between items-center">
+                <h4 class="bg-sidebar-750 rounded-full w-8 h-8 flex justify-center items-center text-sidebar-text-400">i</h4>
+                <h4 class="text-sidebar-text-400">i</h4>
+            </div>
+            <h2 class=" text-3xl font-semibold mt-3 text-gray-700">50</h2>
+            <p class="text-gray-600 text-[0.8rem]">اجمالي ساعات العمل</p>
+            <p class="text-[0.8rem] text-gray-600 mt-4">+ 3 this month</p>
+        </div>
+                <div class="flex flex-col bg-gray-300 p-4 rounded-2xl w-80 border-[1px] border-gray-800">
+            <div class="flex  justify-between items-center">
+                <h4 class="bg-sidebar-750 rounded-full w-8 h-8 flex justify-center items-center text-sidebar-text-400">i</h4>
+                <h4 class="text-sidebar-text-400">i</h4>
+            </div>
+            <h2 class=" text-3xl font-semibold mt-3 text-gray-700">2</h2>
+            <p class="text-gray-600 text-[0.8rem]">اجمالي الغيابات لهذا الشهر</p>
+            <p class="text-[0.8rem] text-gray-600 mt-4">+ 3 this month</p>
+        </div>
+
+        <div class="flex flex-col bg-gray-300 p-4 rounded-2xl w-80 border-[1px] border-gray-800">
+            <div class="flex  justify-between items-center">
+                <h4 class="bg-sidebar-750 rounded-full w-8 h-8 flex justify-center items-center text-sidebar-text-400">i</h4>
+                <h4 class="text-sidebar-text-400">i</h4>
+            </div>
+            <h2 class=" text-3xl font-semibold mt-3 text-gray-700">90%</h2>
+            <p class="text-gray-600 text-[0.8rem]">نسبة الالتزام</p>
+            <p class="text-[0.8rem] text-gray-600 mt-4">+ 3 this month</p>
+        </div>
+
+        <div class="flex flex-col bg-gray-300 p-4 rounded-2xl w-80 border-[1px] border-gray-800">
+            <div class="flex  justify-between items-center">
+                <h4 class="bg-sidebar-750 rounded-full w-8 h-8 flex justify-center items-center text-sidebar-text-400">i</h4>
+                <h4 class="text-sidebar-text-400">i</h4>
+            </div>
+            <h2 class=" text-3xl font-semibold mt-3 text-gray-700">2</h2>
+            <p class="text-gray-600 text-[0.8rem]">عدد أيام التأخير</p>
+            <p class="text-[0.8rem] text-gray-600 mt-4">+ 3 this month</p>
+        </div>
+
+    </div>
+
+    <table class=" mb-10 text-left w-full border-2 border-gray-400 table-auto overflow-hidden">
         <thead  class="bg-gray-200 border-b-2 border-b-gray-400">
             <tr>
                 <th class="p-3 text-sm font-semibold tracking-wide">اليوم</th>
@@ -14,6 +56,7 @@
                 <th class="p-3 text-sm font-semibold">وقت الحضور</th>
                 <th class="p-3 text-sm font-semibold">وقت الانصراف</th>
                 <th class="p-3 text-sm font-semibold"> ساعات العمل </th>
+                <th class="p-3 text-sm font-semibold"> متأخر </th>
             </tr>
         </thead>
         <tbody>
@@ -28,31 +71,49 @@
 
              %}
 
+             {% 
+                set isPassed = day.isPassed()
+            %}
+
              {%
                 set isDayOff = employee.isDayOff(day.date)
             %}
 
+            {% 
+                set isLate = isAttendenceLate(day.attendence) 
+             %}
+
+
              {% if isDayOff %}
                 <tr class="bg-yellow-800 text-yellow-200 hover:bg-gray-700 group  hover:text-gray-50 {{ loop.index is odd ? 'bg-gray-200' :'' }}">
-                <td colspan="5" class="whitespace-nowrap group-hover:text-gray-50 p-3 text-sm">day off</td>
+                    <td colspan="6" class="whitespace-nowrap group-hover:text-gray-50 p-3 text-sm">day off</td>
+                </tr>
              {% else %}
+                {% if isPassed %}
                 <tr class="
             {{ isComplete ? '' : 'bg-red-700 text-red-300' }}
              hover:bg-gray-700 group  hover:text-gray-50 {{ loop.index is odd ? 'bg-gray-200' :'' }}">
-
                 <td class="whitespace-nowrap group-hover:text-gray-50 p-3 text-sm">{{ day.date.format("l") }}</td>
                 <td class="whitespace-nowrap group-hover:text-gray-50 p-3 text-sm">{{ day.date|date("Y-m-d","Asia/Baghdad") }}</td>
-                <td class="whitespace-nowrap group-hover:text-gray-50 p-3 text-sm">{{ day.attendence and day.attendence.checkIn !== null ? day.attendence.checkIn|date("H-i-s","Asia/Baghdad") : "غائب"  }}</td>
-                <td class="whitespace-nowrap group-hover:text-gray-50 p-3 text-sm">{{ day.attendence and day.attendence.checkOut !== null ? day.attendence.checkOut|date("H-i-s","Asia/Baghdad") : "غائب"  }}</td>
+                <td class="whitespace-nowrap group-hover:text-gray-50 p-3 text-sm">{{ day.attendence and day.attendence.checkIn !== null ? day.attendence.checkIn|date("h:i:s A","Asia/Baghdad") : "غائب"  }}</td>
+                <td class="whitespace-nowrap group-hover:text-gray-50 p-3 text-sm">{{ day.attendence and day.attendence.checkOut !== null ? day.attendence.checkOut|date("h:i:s A","Asia/Baghdad") : "غائب"  }}</td>
                 <td class="whitespace-nowrap group-hover:text-gray-50 p-3 text-sm">{{ day.attendence and day.attendence.checkOut !== null ? day.attendence.workingHours : "-" }}</td>
+                <td class="whitespace-nowrap group-hover:text-gray-50 p-3 text-sm">{{ isLate ? "late" : "-" }}</td>
+                {% else %}
+                    <tr class="bg-gray-200 text-gray-800 group">
+                        <td colspan="6" class="whitespace-nowrap group-hover:text-gray-50 p-3 text-sm">{{ day.date|date }} </td>
+                    </tr>
+                {% endif %}
              {% endif %}
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="6">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-    {% include("elements/navbar.html.twig") %}
+
+    <hr class="opacity-0">
+  
 {% endblock %}

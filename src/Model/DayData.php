@@ -16,9 +16,17 @@ class DayData {
     )
     {}
 
+    function isPassed() {
+        $now = new DateTimeImmutable();
+        $now = $now->setTime(0,0,0);
+
+        return $this->date->getTimestamp() < $now->getTimestamp();
+    }
+
     function isOff() {
         return $this->off;
     }
+
     function getDate() {
         return $this->date;
     }
@@ -45,5 +53,9 @@ class DayData {
             $this->attendence = $attendence;
 
             return $this;
+    }
+
+    function isLate() {
+        
     }
 }

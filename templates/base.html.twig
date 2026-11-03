@@ -19,6 +19,68 @@
 
     </head>
     <body>
-        {% block body %}{% endblock %}
+<main class="flex gap-4">
+
+  <div class="p-4 h-screen flex flex-col relative bg-gray-50 w-60 overflow-hidden">
+
+  <div class="flex gap-3 ">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+</svg>
+
+    <h2 class="mb-20 text-xl font-black tracking-tight" >Vekas EMP</h2>
+  </div>
+  
+  <div class=" h-full w-52  flex flex-col gap-3">
+
+  <a  href="{{path('app_employee_index')}}" class="text-gray-500 flex flex-row-reverse justify-end hover:bg-blue-500  hover:text-gray-100  p-4 py-3 rounded-lg">
+    <h3 class="ms-2 text-[0.9rem] font-semibold">لوحة الادارة</h3>
+<svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+  <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
+  <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
+</svg>
+  </a>
+
+  <a
+    href="{{path('app_employee_new')}}"
+   class="text-gray-500 flex flex-row-reverse justify-end hover:bg-blue-500  hover:text-gray-100  p-4 py-3 rounded-lg">
+    <h3 class="ms-2 text-[0.9rem] font-semibold">اضافة موظف</h3>
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+</svg>
+
+  </a>
+
+  <a href="{{path('app_weekly_day_off_index')}}" class="text-gray-500 flex flex-row-reverse justify-end hover:bg-blue-500  hover:text-gray-100  p-4 py-3 rounded-lg">
+    <h3 class="ms-2 text-[0.9rem] font-semibold">ايام العطل الاسبوعية</h3>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+      <path fill-rule="evenodd" d="m6.72 5.66 11.62 11.62A8.25 8.25 0 0 0 6.72 5.66Zm10.56 12.68L5.66 6.72a8.25 8.25 0 0 0 11.62 11.62ZM5.105 5.106c3.807-3.808 9.98-3.808 13.788 0 3.808 3.807 3.808 9.98 0 13.788-3.807 3.808-9.98 3.808-13.788 0-3.808-3.807-3.808-9.98 0-13.788Z" clip-rule="evenodd" />
+    </svg>
+  </a>
+
+    <a href="#" class="text-gray-500 flex flex-row-reverse justify-end hover:bg-blue-500  hover:text-gray-100  p-4 py-3 rounded-lg">
+    <h3 class="ms-2 text-[0.9rem] font-semibold">الاجهزة البايومترية</h3>
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M7.864 4.243A7.5 7.5 0 0 1 19.5 10.5c0 2.92-.556 5.709-1.568 8.268M5.742 6.364A7.465 7.465 0 0 0 4.5 10.5a7.464 7.464 0 0 1-1.15 3.993m1.989 3.559A11.209 11.209 0 0 0 8.25 10.5a3.75 3.75 0 1 1 7.5 0c0 .527-.021 1.049-.064 1.565M12 10.5a14.94 14.94 0 0 1-3.6 9.75m6.633-4.596a18.666 18.666 0 0 1-2.485 5.33" />
+</svg>
+
+  </a>
+
+
+  <a href="/logout" class="text-gray-500 absolute flex flex-row-reverse justify-end bg-gray-0 p-4 py-3 rounded-lg bottom-28  ">
+    <h3 class="ms-2 text-[0.9rem] font-semibold">تسجيل الخروج</h3>
+<svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+  <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
+  <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
+</svg>
+  </a>
+  </div>
+</div>
+
+<div class="p-3 w-full overflow-scroll">
+  {% block body %}
+  {% endblock %}
+</div>
+</main>
     </body>
 </html>
