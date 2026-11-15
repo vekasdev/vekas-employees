@@ -10,6 +10,7 @@ use App\Repository\MonthRepository;
 use App\Service\MonthService;
 use App\Service\ReportService;
 use App\Service\WorkdayService;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
 use Psr\Container\ContainerInterface;
@@ -50,6 +51,8 @@ class WorkdayServiceTest extends KernelTestCase
         
         $dayOffRepo = $this->container->get(DayOffRepository::class);
 
+        $currentMonthDayOffs = $this->countWeekdayInCurrentMonth(WeekDaysEnum::FRIDAY->value);
+
         $fridayOff = WeeklyDayOffFactory::createOne([
             "day" => WeekDaysEnum::FRIDAY
         ]);
@@ -64,12 +67,25 @@ class WorkdayServiceTest extends KernelTestCase
 
         $daysOff = $dayOffRepo->findAll();
 
-        $this->assertGreaterThan(4,$employee1->getDayOffs()->count());
-        $this->assertGreaterThan(4,$employee1->getDayOffs()->count());
-        $this->assertGreaterThan(4,$employee1->getDayOffs()->count());
-
-        $this->assertGreaterThan(4,count($daysOff));
+        $this->assertSame($currentMonthDayOffs,$employee1->getDayOffs()->count());
+        $this->assertSame($currentMonthDayOffs,$employee1->getDayOffs()->count());
+        $this->assertSame($currentMonthDayOffs,$employee1->getDayOffs()->count());
 
     }
+
+    private function countWeekdayInCurrentMonth(string $day): int
+    {
+        $start = new DateTime('first day of this month');
+        $end = new DateTime('last day of this month');
+        $count = 0;
+        while ($start <= $end) {
+            if ($start->format('l') === ucfirst(strtolower($day))) {
+                $count++;
+            }
+            $start->modify('+1 day');
+        }
+        return $count;
+    }
     
+
 }

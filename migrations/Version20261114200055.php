@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20261016165333 extends AbstractMigration
+final class Version20261114200055 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,7 +20,7 @@ final class Version20261016165333 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE attendence (id INT AUTO_INCREMENT NOT NULL, date DATETIME NOT NULL, check_in DATETIME DEFAULT NULL, check_out DATETIME DEFAULT NULL, employee_id INT NOT NULL, INDEX IDX_E2819AC68C03F15C (employee_id), PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
+        $this->addSql('CREATE TABLE attendence (id INT AUTO_INCREMENT NOT NULL, date DATETIME NOT NULL, check_in DATETIME NOT NULL, check_out DATETIME DEFAULT NULL, employee_id INT NOT NULL, INDEX IDX_E2819AC68C03F15C (employee_id), PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('CREATE TABLE day_off (id INT AUTO_INCREMENT NOT NULL, date DATETIME DEFAULT NULL, PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('CREATE TABLE day_off_employee (day_off_id INT NOT NULL, employee_id INT NOT NULL, INDEX IDX_3BC545457E81C1E1 (day_off_id), INDEX IDX_3BC545458C03F15C (employee_id), PRIMARY KEY (day_off_id, employee_id)) DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('CREATE TABLE employee (id INT AUTO_INCREMENT NOT NULL, employee_number VARCHAR(50) NOT NULL, first_name VARCHAR(255) NOT NULL, work_start_time TIME NOT NULL, work_end_time TIME NOT NULL, last_name VARCHAR(255) NOT NULL, occupation VARCHAR(255) DEFAULT NULL, PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');

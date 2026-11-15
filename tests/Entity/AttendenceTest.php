@@ -24,6 +24,8 @@ class AttendenceTest extends KernelTestCase
 
     function testIsCompleteFunction() {
         $employee = EmployeeFactory::createOne([
+            "workStartTime" => (new DateTimeImmutable(2026-2-3))->setTime(9,0,0),
+            "workEndTime" => (new DateTimeImmutable(2026-2-3))->setTime(17,0,0),
         ]);
 
         $attendence = AttendenceFactory::createOne([
