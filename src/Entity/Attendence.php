@@ -22,7 +22,7 @@ class Attendence
     #[ORM\Column]
     private ?\DateTimeImmutable $date = null;
 
-    #[ORM\Column()]
+    #[ORM\Column(nullable:true)]
     private ?\DateTimeImmutable $checkIn = null;
 
     #[ORM\Column(nullable:true)]
