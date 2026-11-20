@@ -5,6 +5,7 @@ namespace App\Service;
 
 use App\Entity\Attendence;
 use App\Entity\Employee;
+use DateTime;
 use DomainException;
 use InvalidArgumentException;
 
@@ -35,6 +36,30 @@ class EmployeeService {
         $workingHours = $employee->getWorkingHours();
         return $attendence->getWorkingHours() >= $workingHours;
     }
-    
+ 
+    function getTotalWorkingHours(Employee $employee, $period = "all_time",DateTime 
+    | NULL $month = null) {
+
+        
+        $hoursCount = 0;
+        foreach($employee->getAttendences() as $attendence) {
+            $hoursCount += $attendence->getWorkingHours();
+        }
+        return $hoursCount;
+
+    }
+
+    function getTotalAbsentDays() {
+
+    }
+
+    function getCommitmentPercentage() {
+
+    }
+
+    function getLateDays() {
+
+    }
+
 
 }
