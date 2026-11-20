@@ -3,10 +3,20 @@
 {% block title %}New Employee{% endblock %}
 
 {% block body %}
-    <h1 class="text-center my-13 text-5xl">اضافة موظف جديد</h1>
+    <div dir="rtl" class="mx-auto max-w-3xl space-y-6">
+        <header>
+            <p class="mb-2 text-sm font-semibold text-indigo-600">إدارة الموظفين</p>
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900">إضافة موظف جديد</h1>
+            <p class="mt-2 text-sm text-slate-500">أدخل بيانات الموظف وساعات العمل المطلوبة.</p>
+        </header>
 
-    <div class="container m-auto p-4 border-2 border-gray-50 shadow-2xl py-10">
-        {{ include('employee/_form.html.twig') }}
+        <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
+            {{ include('employee/_form.html.twig') }}
+        </section>
+
+        <a href="{{ path('app_employee_index') }}" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 transition hover:text-indigo-700">
+            <span aria-hidden="true">→</span>
+            العودة إلى لوحة الموظفين
+        </a>
     </div>
-
 {% endblock %}

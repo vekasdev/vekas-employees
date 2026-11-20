@@ -177,7 +177,7 @@ class Employee
 
     function isDayOff(DateTimeImmutable $day) {
         foreach($this->dayOffs as $dayOff) {
-            if ( $day->format('Y-m-d') === $dayOff->getDate()->format('Y-m-d') ) {
+            if ($dayOff->getDate() !== null && $day->format('Y-m-d') === $dayOff->getDate()->format('Y-m-d')) {
                 return true;
             }
         }

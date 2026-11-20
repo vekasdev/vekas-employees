@@ -1,30 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Employee{% endblock %}
+{% block title %}بيانات الموظف{% endblock %}
 
 {% block body %}
-    <h1>Employee</h1>
+    <div dir="rtl" class="mx-auto max-w-3xl space-y-6">
+        <header class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+                <p class="mb-2 text-sm font-semibold text-indigo-600">إدارة الموظفين</p>
+                <h1 class="text-3xl font-bold tracking-tight text-slate-900">{{ employee.firstName }} {{ employee.lastName }}</h1>
+                <p class="mt-2 text-sm text-slate-500">رقم الموظف: {{ employee.employeeNumber }}</p>
+            </div>
+            <a href="{{ path('app_employee_edit', {'id': employee.id}) }}" class="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-100">تعديل البيانات</a>
+        </header>
 
-    <table class="text-amber-600">
-        <thead>
-            <tr>
-                <td class="text-8xl bg-yellow-900">رقم الموظف</td>
-                <td>الاسم</td>
-                <td>الحالة</td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{ employee.employeeNumber }}</td>
-                <td>{{ employee.firstName ~ employee.lastName }}</td>
-                <td class="bg-amber-950">متواجد</td>
-            </tr>
-        </tbody>
-    </table>
+        <section class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <dl class="divide-y divide-slate-100">
+                <div class="grid gap-1 px-5 py-4 sm:grid-cols-3 sm:gap-4">
+                    <dt class="text-sm font-medium text-slate-500">رقم الموظف</dt>
+                    <dd class="text-sm font-semibold text-slate-900 sm:col-span-2">{{ employee.employeeNumber }}</dd>
+                </div>
+                <div class="grid gap-1 px-5 py-4 sm:grid-cols-3 sm:gap-4">
+                    <dt class="text-sm font-medium text-slate-500">الاسم</dt>
+                    <dd class="text-sm font-semibold text-slate-900 sm:col-span-2">{{ employee.firstName }} {{ employee.lastName }}</dd>
+                </div>
+                <div class="grid gap-1 px-5 py-4 sm:grid-cols-3 sm:gap-4">
+                    <dt class="text-sm font-medium text-slate-500">الوظيفة الحالية</dt>
+                    <dd class="text-sm font-semibold text-slate-900 sm:col-span-2">{{ employee.occupation ?: '—' }}</dd>
+                </div>
+                <div class="grid gap-1 px-5 py-4 sm:grid-cols-3 sm:gap-4">
+                    <dt class="text-sm font-medium text-slate-500">وقت بداية العمل</dt>
+                    <dd dir="ltr" class="text-right text-sm font-semibold text-slate-900 sm:col-span-2">{{ employee.workStartTime ? employee.workStartTime|date('h:i A') : '—' }}</dd>
+                </div>
+                <div class="grid gap-1 px-5 py-4 sm:grid-cols-3 sm:gap-4">
+                    <dt class="text-sm font-medium text-slate-500">وقت نهاية العمل</dt>
+                    <dd dir="ltr" class="text-right text-sm font-semibold text-slate-900 sm:col-span-2">{{ employee.workEndTime ? employee.workEndTime|date('h:i A') : '—' }}</dd>
+                </div>
+            </dl>
+        </section>
 
-    <a href="{{ path('app_employee_index') }}">back to list</a>
-
-    <a href="{{ path('app_employee_edit', {'id': employee.id}) }}">edit</a>
-
-    {{ include('employee/_delete_form.html.twig') }}
+        <div class="flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
+            {{ include('employee/_delete_form.html.twig') }}
+            <a href="{{ path('app_employee_index') }}" class="text-center text-sm font-semibold text-slate-600 transition hover:text-indigo-700">العودة إلى لوحة الموظفين</a>
+        </div>
+    </div>
 {% endblock %}

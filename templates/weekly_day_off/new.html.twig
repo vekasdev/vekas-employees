@@ -3,7 +3,15 @@
 {% block title %}New WeeklyDayOff{% endblock %}
 
 {% block body %}
-    <div class="w-full h-screen flex justify-center items-center">
-        {{ include('weekly_day_off/_form.html.twig') }}
+    <div dir="rtl" class="mx-auto max-w-xl space-y-6">
+        <header>
+            <p class="mb-2 text-sm font-semibold text-indigo-600">إعدادات الدوام</p>
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900">إضافة يوم عطلة أسبوعية</h1>
+            <p class="mt-2 text-sm text-slate-500">اختر اليوم الذي يُعد عطلة أسبوعية للموظفين.</p>
+        </header>
+        <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
+            {{ include('weekly_day_off/_form.html.twig') }}
+        </section>
+        <a href="{{ path('app_weekly_day_off_index') }}" class="text-sm font-semibold text-slate-600 transition hover:text-indigo-700">العودة إلى العطل الأسبوعية</a>
     </div>
 {% endblock %}

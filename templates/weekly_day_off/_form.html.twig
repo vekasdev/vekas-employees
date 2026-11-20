@@ -1,11 +1,11 @@
-{{ form_start(form) }}
-    <div class="flex flex-col w-80">
-        {{ form_label(form.day,"day") }}
+{{ form_start(form, {'attr': {'dir': 'rtl', 'class': 'space-y-5'}}) }}
+    <div class="space-y-2">
+        {{ form_label(form.day, 'اليوم', {'label_attr': {'class': 'block text-sm font-semibold text-slate-700'}}) }}
         {{ form_widget(form.day,{
             attr:{
-                class:"mb-4 w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none cursor-pointer"
+                class:"w-full cursor-pointer appearance-none rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
             }
         }) }}
-        <button class="btn py-3 px-4 bg-sky-900 text-sky-200 font-semibold">{{ button_label|default('Save') }}</button>
     </div>
+    <button class="w-full cursor-pointer rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-100">{{ button_label|default('حفظ اليوم') }}</button>
 {{ form_end(form) }}

@@ -1,52 +1,79 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Employee index{% endblock %}
+{% block title %}لوحة الموظفين{% endblock %}
 
 {% block body %}
-    <h1 class="text-center text-4xl my-8">اليوم : {{date}}</h1>
+    <div dir="rtl" class="mx-auto w-full max-w-7xl space-y-6">
+        <header class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+                <p class="mb-2 text-sm font-semibold text-indigo-600">إدارة الموارد البشرية</p>
+                <h1 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">لوحة الموظفين</h1>
+                <p class="mt-2 text-sm text-slate-500">متابعة الحضور والانصراف اليومي</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-3">
+                <span class="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 shadow-sm">{{ date }}</span>
+                <a href="{{ path('app_employee_new') }}" class="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5" />
+                    </svg>
+                    <span>إضافة موظف</span>
+                </a>
+            </div>
+        </header>
 
-    <table class="rounded-lg text-left w-full  border-gray-400 table-auto overflow-hidden">
-        <thead  class="bg-gray-200 border-b-2 border-b-gray-400">
-            <tr class="text-sm font-regular text-center">
-                <th class="p-3">رقم الموظف</th>
-                <th class="p-3">الاسم</th>
-                <th class="p-3">وقت الحضور</th>
-                <th class="p-3">وقت الانصراف</th>
-                <th class="p-3"> ساعات العمل </th>
-                <th class="p-3"> مستوفي </th>
-                <th class="p-3">الموظف</th>
-                <th class="p-3"> تاريخ الحضور</th>
-                <th class="p-3"> عمل تقرير</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for employee in employees %}
-                {% set todayAttendence = getTodayAttendence(employee) %}
-            <tr class=" hover:bg-gray-700 group  hover:text-gray-50 {{ loop.index is odd ? 'bg-gray-200' :'' }}">
-                <td class="whitespace-nowrap group-hover:text-gray-50 p-3 text-sm text-blue-600 ">{{ employee.employeeNumber }}</td>
-                <td class=" whitespace-nowrap p-3 text-sm">{{ employee.firstName ~ employee.lastName }}</td>
-                <td class=" whitespace-nowrap {{todayAttendence ?  ( todayAttendence.checkIn ? '' : '' ) : '' }}">
-                    <a  class="p-3 text-sm   rounded-sm" >{{ todayAttendence ?  ( todayAttendence.checkIn ? todayAttendence.checkIn|date('h:i A', 'Asia/Baghdad')  :  "--" ) :  "--" }}
-                    </a>
-                </td>
-                <td class=" whitespace-nowrap  "><a class="p-3 text-sm  rounded-sm">{{ todayAttendence ?  ( todayAttendence.checkOut ? todayAttendence.checkOut|date('h:i A', 'Asia/Baghdad') :  "--" ) :  "--" }}</a></td>
-                <td class=" whitespace-nowrap p-3 text-sm"> {{ todayAttendence.getWorkingHours() | number_format(2) }} </td>
-                <td class=" whitespace-nowrap p-3 text-sm"> {{ (todayAttendence.getWorkingHours() | number_format(2))  >= 8 ? "مستوفي":  "غير مستوفي" }} </td>
-                <td class=" whitespace-nowrap p-3 text-sm">
-                    <a href="{{ path('app_employee_edit', {'id': employee.id}) }}">تعديل</a>
-                </td>
-                <td class=" whitespace-nowrap p-3 text-sm">
-                    <a href="{{ path('app_attendence_edit', {'id': todayAttendence.id}) }}">تعديل</a>
-                </td>
-                <td class=" whitespace-nowrap p-3 text-sm">
-                    <a href="{{ path('report_employee_choose', {'id': employee.id}) }}">تقرير شهري</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <section class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4">
+                <h2 class="text-lg font-bold text-slate-900">حضور الموظفين</h2>
+                <span class="text-sm text-slate-500">{{ employees|length }} موظف</span>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-[900px] w-full text-right text-sm">
+                    <thead class="bg-slate-50 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                        <tr>
+                            <th scope="col" class="whitespace-nowrap px-4 py-3">رقم الموظف</th>
+                            <th scope="col" class="whitespace-nowrap px-4 py-3">الاسم</th>
+                            <th scope="col" class="whitespace-nowrap px-4 py-3">وقت الحضور</th>
+                            <th scope="col" class="whitespace-nowrap px-4 py-3">وقت الانصراف</th>
+                            <th scope="col" class="whitespace-nowrap px-4 py-3">ساعات العمل</th>
+                            <th scope="col" class="whitespace-nowrap px-4 py-3">الحالة</th>
+                            <th scope="col" class="whitespace-nowrap px-4 py-3">الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                    {% for employee in employees %}
+                        {% set todayAttendence = getTodayAttendence(employee) %}
+                        {% set workingHours = todayAttendence ? todayAttendence.workingHours : 0 %}
+                        <tr class="transition hover:bg-slate-50">
+                            <td class="whitespace-nowrap px-4 py-4 font-medium text-indigo-700">{{ employee.employeeNumber }}</td>
+                            <td class="whitespace-nowrap px-4 py-4 font-semibold text-slate-900">{{ employee.firstName }} {{ employee.lastName }}</td>
+                            <td dir="ltr" class="whitespace-nowrap px-4 py-4 text-right text-slate-600">{{ todayAttendence and todayAttendence.checkIn ? todayAttendence.checkIn|date('h:i A', 'Asia/Baghdad') : '—' }}</td>
+                            <td dir="ltr" class="whitespace-nowrap px-4 py-4 text-right text-slate-600">{{ todayAttendence and todayAttendence.checkOut ? todayAttendence.checkOut|date('h:i A', 'Asia/Baghdad') : '—' }}</td>
+                            <td class="whitespace-nowrap px-4 py-4 font-medium text-slate-700">{{ workingHours|number_format(2) }}</td>
+                            <td class="whitespace-nowrap px-4 py-4">
+                                {% if workingHours >= 8 %}
+                                    <span class="inline-flex rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">مستوفي</span>
+                                {% else %}
+                                    <span class="inline-flex rounded-full bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-700">غير مستوفي</span>
+                                {% endif %}
+                            </td>
+                            <td class="whitespace-nowrap px-4 py-4">
+                                <div class="flex items-center gap-2">
+                                    <a href="{{ path('app_employee_edit', {'id': employee.id}) }}" class="rounded-lg px-2.5 py-1.5 text-xs font-semibold text-indigo-700 transition hover:bg-indigo-50">تعديل الموظف</a>
+                                    {% if todayAttendence %}
+                                        <a href="{{ path('app_attendence_edit', {'id': todayAttendence.id}) }}" class="rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-100">الحضور</a>
+                                    {% endif %}
+                                    <a href="{{ path('report_employee_choose', {'id': employee.id}) }}" class="rounded-lg px-2.5 py-1.5 text-xs font-semibold text-emerald-700 transition hover:bg-emerald-50">التقرير</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7" class="px-5 py-12 text-center text-slate-500">لا يوجد موظفون حتى الآن</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
 {% endblock %}

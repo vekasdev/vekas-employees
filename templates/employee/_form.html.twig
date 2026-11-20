@@ -1,10 +1,9 @@
-{{ form_start(form) }}
-    <div class="text-right">
-        <div class="my-4">
+{{ form_start(form, {'attr': {'dir': 'rtl', 'class': 'space-y-5'}}) }}
+        <div class="space-y-2">
             {{
                 form_label(form.firstName,'الاسم الاول',{
                     "label_attr" : {
-                        'class' : "mb-3 block"
+                        'class' : "block text-sm font-semibold text-slate-700"
                     }
                 })
             }}
@@ -12,17 +11,17 @@
             {{
                 form_widget(form.firstName,{
                     "attr" : {
-                        'class' : "w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                        'class' : "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
                     }
                 })
             }}
         </div>
 
-        <div class="my-4">
+        <div class="space-y-2">
             {{
                 form_label(form.lastName,'الاسم الثاني',{
                     "label_attr" : {
-                        'class' : "mb-3 block"
+                        'class' : "block text-sm font-semibold text-slate-700"
                     }
                 })
             }}
@@ -30,7 +29,7 @@
             {{
                 form_widget(form.lastName,{
                     "attr" : {
-                        'class' : "w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                        'class' : "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
                     }
                 })
             }}
@@ -55,11 +54,11 @@
             }}
         </div> #}
 
-        <div class="my-4">
+        <div class="space-y-2">
             {{
                 form_label(form.occupation,'الوظيفة الحالية',{
                     "label_attr" : {
-                        'class' : "mb-3 block"
+                        'class' : "block text-sm font-semibold text-slate-700"
                     }
                 })
             }}
@@ -67,17 +66,17 @@
             {{
                 form_widget(form.occupation,{
                     "attr" : {
-                        'class' : "w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                        'class' : "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
                     }
                 })
             }}
         </div>
 
-        <div class="my-4">
+        <div class="space-y-2">
             {{
                 form_label(form.workStartTime,'تاريخ الحضور',{
                     "label_attr" : {
-                        'class' : "mb-3 block"
+                        'class' : "block text-sm font-semibold text-slate-700"
                     }
                 })
             }}
@@ -85,17 +84,17 @@
             {{
                 form_widget(form.workStartTime,{
                     "attr" : {
-                        'class' : "w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                        'class' : "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
                     }
                 })
             }}
         </div>
 
-        <div class="my-4">
+        <div class="space-y-2">
             {{
                 form_label(form.workEndTime,'تاريخ الانصراف',{
                     "label_attr" : {
-                        'class' : "mb-3 block"
+                        'class' : "block text-sm font-semibold text-slate-700"
                     }
                 })
             }}
@@ -103,24 +102,23 @@
             {{
                 form_widget(form.workEndTime,{
                     "attr" : {
-                        'class' : "w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                        'class' : "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
                     }
                 })
             }}
         </div>
 
 
-        <div class="my-4">
+        <div class="pt-2">
        
             {{
                 form_widget(form.submit,{
-                "label" : "اضافة",
+                "label" : button_label|default('إضافة الموظف'),
                 'attr' : {
-                    'class' : 'w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-green-900 text-gray-50'
+                    'class' : 'w-full cursor-pointer rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-100'
                 }
                 })
             }}
         </div>
 
-    </div>
 {{ form_end(form) }}

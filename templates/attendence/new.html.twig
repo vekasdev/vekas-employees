@@ -1,11 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Attendence{% endblock %}
+{% block title %}إضافة سجل حضور{% endblock %}
 
 {% block body %}
-    <h1>Create new Attendence</h1>
-
-    {{ include('attendence/_form.html.twig') }}
-
-    <a href="{{ path('app_attendence_index') }}">back to list</a>
+    <div dir="rtl" class="mx-auto max-w-2xl space-y-6">
+        <header>
+            <p class="mb-2 text-sm font-semibold text-indigo-600">إدارة الدوام</p>
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900">إضافة سجل حضور</h1>
+            <p class="mt-2 text-sm text-slate-500">أدخل وقت حضور الموظف وانصرافه.</p>
+        </header>
+        <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
+            {{ include('attendence/_form.html.twig') }}
+        </section>
+        <a href="{{ path('app_attendence_index') }}" class="text-sm font-semibold text-slate-600 transition hover:text-indigo-700">العودة إلى سجلات الحضور</a>
+    </div>
 {% endblock %}

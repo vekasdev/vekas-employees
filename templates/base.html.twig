@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}Vekas EMP{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
@@ -12,75 +13,79 @@
         {% endblock %}
         {% set frankenphp_hot_reload = app.request.server.get('FRANKENPHP_HOT_RELOAD') %}
         {% if frankenphp_hot_reload %}
-        <meta name="frankenphp-hot-reload:url" content="{{ frankenphp_hot_reload }}">
-        <script src="https://cdn.jsdelivr.net/npm/idiomorph"></script>
-        <script src="https://cdn.jsdelivr.net/npm/frankenphp-hot-reload/+esm" type="module"></script>
+            <meta name="frankenphp-hot-reload:url" content="{{ frankenphp_hot_reload }}">
+            <script src="https://cdn.jsdelivr.net/npm/idiomorph"></script>
+            <script src="https://cdn.jsdelivr.net/npm/frankenphp-hot-reload/+esm" type="module"></script>
         {% endif %}
-
     </head>
-    <body>
-<main class="flex gap-4">
+    <body class="min-h-screen bg-slate-50 text-slate-800 antialiased">
+        {% set isAuthPage = app.request.attributes.get('_route') in ['app_login', 'app_register'] %}
+        {% set currentRoute = app.request.attributes.get('_route') %}
+        {% set isDashboard = currentRoute == 'app_employee_index' %}
+        {% set isEmployeeNew = currentRoute == 'app_employee_new' %}
+        {% set isDayOff = currentRoute starts with 'app_weekly_day_off_' %}
+        {% set isAttendance = currentRoute starts with 'app_attendence_' %}
+        {% set isBiometricDevices = currentRoute starts with 'app_biometric_device_' %}
 
-  <div class="p-4 h-screen flex flex-col relative bg-gray-50 w-60 overflow-hidden">
+        <main class="{{ isAuthPage ? 'min-h-screen' : 'min-h-screen lg:flex' }}">
+            {% if not isAuthPage %}
+                <aside dir="rtl" class="border-b border-slate-200 bg-white lg:sticky lg:top-0 lg:flex lg:h-screen lg:w-64 lg:shrink-0 lg:flex-col lg:border-b-0 lg:border-l">
+                    <a href="{{ path('app_employee_index') }}" class="flex items-center gap-3 px-5 py-5">
+                        <span class="flex size-11 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-sm shadow-indigo-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M5 21V7l8-4v18m6 0V11l-6-4M9 9v.01M9 12v.01M9 15v.01M9 18v.01m8-5v.01m0 3v.01" />
+                            </svg>
+                        </span>
+                        <span>
+                            <span class="block text-lg font-bold tracking-tight text-slate-900">Vekas EMP</span>
+                            <span class="block text-xs text-slate-500">إدارة الموظفين</span>
+                        </span>
+                    </a>
 
-  <div class="flex gap-3 ">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-</svg>
-
-    <h2 class="mb-20 text-xl font-black tracking-tight" >Vekas EMP</h2>
-  </div>
-  
-  <div class=" h-full w-52  flex flex-col gap-3">
-
-  <a  href="{{path('app_employee_index')}}" class="text-gray-500 flex flex-row-reverse justify-end hover:bg-blue-500  hover:text-gray-100  p-4 py-3 rounded-lg">
-    <h3 class="ms-2 text-[0.9rem] font-semibold">لوحة الادارة</h3>
-<svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
-  <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
-  <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
-</svg>
-  </a>
-
-  <a
-    href="{{path('app_employee_new')}}"
-   class="text-gray-500 flex flex-row-reverse justify-end hover:bg-blue-500  hover:text-gray-100  p-4 py-3 rounded-lg">
-    <h3 class="ms-2 text-[0.9rem] font-semibold">اضافة موظف</h3>
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
-</svg>
-
-  </a>
-
-  <a href="{{path('app_weekly_day_off_index')}}" class="text-gray-500 flex flex-row-reverse justify-end hover:bg-blue-500  hover:text-gray-100  p-4 py-3 rounded-lg">
-    <h3 class="ms-2 text-[0.9rem] font-semibold">ايام العطل الاسبوعية</h3>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-      <path fill-rule="evenodd" d="m6.72 5.66 11.62 11.62A8.25 8.25 0 0 0 6.72 5.66Zm10.56 12.68L5.66 6.72a8.25 8.25 0 0 0 11.62 11.62ZM5.105 5.106c3.807-3.808 9.98-3.808 13.788 0 3.808 3.807 3.808 9.98 0 13.788-3.807 3.808-9.98 3.808-13.788 0-3.808-3.807-3.808-9.98 0-13.788Z" clip-rule="evenodd" />
-    </svg>
-  </a>
-
-    <a href="#" class="text-gray-500 flex flex-row-reverse justify-end hover:bg-blue-500  hover:text-gray-100  p-4 py-3 rounded-lg">
-    <h3 class="ms-2 text-[0.9rem] font-semibold">الاجهزة البايومترية</h3>
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M7.864 4.243A7.5 7.5 0 0 1 19.5 10.5c0 2.92-.556 5.709-1.568 8.268M5.742 6.364A7.465 7.465 0 0 0 4.5 10.5a7.464 7.464 0 0 1-1.15 3.993m1.989 3.559A11.209 11.209 0 0 0 8.25 10.5a3.75 3.75 0 1 1 7.5 0c0 .527-.021 1.049-.064 1.565M12 10.5a14.94 14.94 0 0 1-3.6 9.75m6.633-4.596a18.666 18.666 0 0 1-2.485 5.33" />
-</svg>
-
-  </a>
-
-
-  <a href="/logout" class="text-gray-500 absolute flex flex-row-reverse justify-end bg-gray-0 p-4 py-3 rounded-lg bottom-28  ">
-    <h3 class="ms-2 text-[0.9rem] font-semibold">تسجيل الخروج</h3>
-<svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
-  <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
-  <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
-</svg>
-  </a>
-  </div>
-</div>
-
-<div class="p-3 w-full overflow-scroll">
-  {% block body %}
-  {% endblock %}
-</div>
-</main>
+                    <div class="px-5 pb-2 pt-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">القائمة الرئيسية</div>
+                    <nav aria-label="القائمة الرئيسية" class="flex gap-2 overflow-x-auto px-3 pb-3 lg:flex-1 lg:flex-col lg:overflow-visible lg:px-4">
+                        <a href="{{ path('app_employee_index') }}" {% if isDashboard %}aria-current="page"{% endif %} class="flex shrink-0 items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition {{ isDashboard ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10Z" />
+                            </svg>
+                            <span>لوحة الموظفين</span>
+                        </a>
+                        <a href="{{ path('app_employee_new') }}" {% if isEmployeeNew %}aria-current="page"{% endif %} class="flex shrink-0 items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition {{ isEmployeeNew ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+                            </svg>
+                            <span>إضافة موظف</span>
+                        </a>
+                        <a href="{{ path('app_weekly_day_off_index') }}" {% if isDayOff %}aria-current="page"{% endif %} class="flex shrink-0 items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition {{ isDayOff ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 3v3m8-3v3M4 9h16M6 5h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Zm3 8h.01M12 13h.01M15 13h.01M9 16h.01M12 16h.01" />
+                            </svg>
+                            <span>العطل الأسبوعية</span>
+                        </a>
+                        <a href="{{ path('app_attendence_index') }}" {% if isAttendance %}aria-current="page"{% endif %} class="flex shrink-0 items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition {{ isAttendance ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2m6-2a10 10 0 1 1-20 0 10 10 0 0 1 20 0Z" />
+                            </svg>
+                            <span>سجلات الحضور</span>
+                        </a>
+                        <a href="{{ path('app_biometric_device_index') }}" {% if isBiometricDevices %}aria-current="page"{% endif %} class="flex shrink-0 items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition {{ isBiometricDevices ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm0 0v8m-5-5.5a8 8 0 0 1 10 0M5 8.5a10 10 0 0 1 14 0" />
+                            </svg>
+                            <span>Biometric Devices</span>
+                        </a>
+                        <a href="/logout" class="mt-0 flex shrink-0 items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-rose-50 hover:text-rose-700 lg:mt-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6A2.25 2.25 0 0 0 5.25 5.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m-4.5-3h9m0 0-3-3m3 3-3 3" />
+                            </svg>
+                            <span>تسجيل الخروج</span>
+                        </a>
+                    </nav>
+                </aside>
+            {% endif %}
+            <div class="{{ isAuthPage ? 'min-h-screen' : 'min-w-0 flex-1 p-4 sm:p-6 lg:p-8' }}">
+                {% block body %}{% endblock %}
+            </div>
+        </main>
     </body>
 </html>

@@ -1,39 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Attendence index{% endblock %}
+{% block title %}سجلات الحضور{% endblock %}
 
 {% block body %}
-    <h1>Attendence index</h1>
+    <div dir="rtl" class="mx-auto w-full max-w-7xl space-y-6">
+        <header class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+                <p class="mb-2 text-sm font-semibold text-indigo-600">إدارة الدوام</p>
+                <h1 class="text-3xl font-bold tracking-tight text-slate-900">سجلات الحضور</h1>
+                <p class="mt-2 text-sm text-slate-500">عرض ومراجعة سجلات حضور الموظفين.</p>
+            </div>
+            <a href="{{ path('app_attendence_new') }}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-100">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5" />
+                </svg>
+                إضافة سجل
+            </a>
+        </header>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Date</th>
-                <th>CheckIn</th>
-                <th>CheckOut</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for attendence in attendences %}
-            <tr>
-                <td>{{ attendence.id }}</td>
-                <td>{{ attendence.date ? attendence.date|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ attendence.checkIn ? attendence.checkIn|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ attendence.checkOut ? attendence.checkOut|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_attendence_show', {'id': attendence.id}) }}">show</a>
-                    <a href="{{ path('app_attendence_edit', {'id': attendence.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_attendence_new') }}">Create new</a>
+        <section class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4">
+                <h2 class="text-lg font-bold text-slate-900">كل السجلات</h2>
+                <span class="text-sm text-slate-500">{{ attendences|length }} سجل</span>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-[760px] w-full text-right text-sm">
+                    <thead class="bg-slate-50 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                        <tr>
+                            <th scope="col" class="px-5 py-3">رقم السجل</th>
+                            <th scope="col" class="px-5 py-3">التاريخ</th>
+                            <th scope="col" class="px-5 py-3">وقت الحضور</th>
+                            <th scope="col" class="px-5 py-3">وقت الانصراف</th>
+                            <th scope="col" class="px-5 py-3">الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                    {% for attendence in attendences %}
+                        <tr class="transition hover:bg-slate-50">
+                            <td class="whitespace-nowrap px-5 py-4 font-medium text-slate-900">#{{ attendence.id }}</td>
+                            <td dir="ltr" class="whitespace-nowrap px-5 py-4 text-right text-slate-600">{{ attendence.date ? attendence.date|date('Y-m-d H:i') : '—' }}</td>
+                            <td dir="ltr" class="whitespace-nowrap px-5 py-4 text-right text-slate-600">{{ attendence.checkIn ? attendence.checkIn|date('h:i A', 'Asia/Baghdad') : '—' }}</td>
+                            <td dir="ltr" class="whitespace-nowrap px-5 py-4 text-right text-slate-600">{{ attendence.checkOut ? attendence.checkOut|date('h:i A', 'Asia/Baghdad') : '—' }}</td>
+                            <td class="whitespace-nowrap px-5 py-4">
+                                <div class="flex items-center gap-2">
+                                    <a href="{{ path('app_attendence_show', {'id': attendence.id}) }}" class="rounded-lg px-2.5 py-1.5 text-xs font-semibold text-indigo-700 transition hover:bg-indigo-50">عرض</a>
+                                    <a href="{{ path('app_attendence_edit', {'id': attendence.id}) }}" class="rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-100">تعديل</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="px-5 py-12 text-center text-slate-500">لا توجد سجلات حضور حتى الآن</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
 {% endblock %}

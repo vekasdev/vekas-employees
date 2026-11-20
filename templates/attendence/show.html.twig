@@ -1,34 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Attendence{% endblock %}
+{% block title %}تفاصيل سجل الحضور{% endblock %}
 
 {% block body %}
-    <h1>Attendence</h1>
+    <div dir="rtl" class="mx-auto max-w-3xl space-y-6">
+        <header class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+                <p class="mb-2 text-sm font-semibold text-indigo-600">إدارة الدوام</p>
+                <h1 class="text-3xl font-bold tracking-tight text-slate-900">تفاصيل سجل الحضور</h1>
+                <p class="mt-2 text-sm text-slate-500">رقم السجل #{{ attendence.id }}</p>
+            </div>
+            <a href="{{ path('app_attendence_edit', {'id': attendence.id}) }}" class="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-100">تعديل السجل</a>
+        </header>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ attendence.id }}</td>
-            </tr>
-            <tr>
-                <th>Date</th>
-                <td>{{ attendence.date ? attendence.date|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>CheckIn</th>
-                <td>{{ attendence.checkIn ? attendence.checkIn|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>CheckOut</th>
-                <td>{{ attendence.checkOut ? attendence.checkOut|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+        <section class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <dl class="divide-y divide-slate-100">
+                <div class="grid gap-1 px-5 py-4 sm:grid-cols-3 sm:gap-4">
+                    <dt class="text-sm font-medium text-slate-500">التاريخ</dt>
+                    <dd dir="ltr" class="text-right text-sm font-semibold text-slate-900 sm:col-span-2">{{ attendence.date ? attendence.date|date('Y-m-d H:i') : '—' }}</dd>
+                </div>
+                <div class="grid gap-1 px-5 py-4 sm:grid-cols-3 sm:gap-4">
+                    <dt class="text-sm font-medium text-slate-500">وقت الحضور</dt>
+                    <dd dir="ltr" class="text-right text-sm font-semibold text-slate-900 sm:col-span-2">{{ attendence.checkIn ? attendence.checkIn|date('h:i:s A', 'Asia/Baghdad') : '—' }}</dd>
+                </div>
+                <div class="grid gap-1 px-5 py-4 sm:grid-cols-3 sm:gap-4">
+                    <dt class="text-sm font-medium text-slate-500">وقت الانصراف</dt>
+                    <dd dir="ltr" class="text-right text-sm font-semibold text-slate-900 sm:col-span-2">{{ attendence.checkOut ? attendence.checkOut|date('h:i:s A', 'Asia/Baghdad') : '—' }}</dd>
+                </div>
+                <div class="grid gap-1 px-5 py-4 sm:grid-cols-3 sm:gap-4">
+                    <dt class="text-sm font-medium text-slate-500">ساعات العمل</dt>
+                    <dd class="text-sm font-semibold text-slate-900 sm:col-span-2">{{ attendence.workingHours|number_format(2) }}</dd>
+                </div>
+            </dl>
+        </section>
 
-    <a href="{{ path('app_attendence_index') }}">back to list</a>
-
-    <a href="{{ path('app_attendence_edit', {'id': attendence.id}) }}">edit</a>
-
-    {{ include('attendence/_delete_form.html.twig') }}
+        <div class="flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
+            {{ include('attendence/_delete_form.html.twig') }}
+            <a href="{{ path('app_attendence_index') }}" class="text-center text-sm font-semibold text-slate-600 transition hover:text-indigo-700">العودة إلى سجلات الحضور</a>
+        </div>
+    </div>
 {% endblock %}

@@ -7,6 +7,7 @@ use App\Entity\Employee;
 use App\Form\ReportType;
 use App\Service\MonthService;
 use App\Service\ReportService;
+use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,9 +26,14 @@ class ReportsController extends AbstractController {
     #[Route("/emp/{id}/{year}/{month}","report_employee")]
     function employeeReport(Employee $employee,$year,$month) {
         $days = $this->reportService->getEmployeeData($employee,$month,$year);
+        $from = new DateTimeImmutable("$year-$month-01");
+        $to = $from->modify('last day of this month');
+
         return $this->render("report/employee_report.html.twig",[
             "days" => $days,
-            "employee" => $employee
+            "employee" => $employee,
+            "from" => $from,
+            "to" => $to,
         ]);
     }
 

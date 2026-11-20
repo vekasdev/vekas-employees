@@ -1,13 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Attendence{% endblock %}
+{% block title %}تعديل سجل الحضور{% endblock %}
 
 {% block body %}
-<div class="container m-auto">
-    <div class="text-center text-6xl my-5" >تعديل الحضور</div>
-
-    <div class=" mt-15 p-3 border-2 block m-auto border-gray-100 shadow" >
-        {{ include('attendence/_form.html.twig', {'button_label': 'Update'}) }}
+    <div dir="rtl" class="mx-auto max-w-2xl space-y-6">
+        <header>
+            <p class="mb-2 text-sm font-semibold text-indigo-600">إدارة الدوام</p>
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900">تعديل سجل الحضور</h1>
+            <p class="mt-2 text-sm text-slate-500">سجل رقم #{{ attendence.id }}</p>
+        </header>
+        <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
+            {{ include('attendence/_form.html.twig', {'button_label': 'حفظ التعديلات'}) }}
+        </section>
+        <a href="{{ path('app_attendence_index') }}" class="text-sm font-semibold text-slate-600 transition hover:text-indigo-700">العودة إلى سجلات الحضور</a>
     </div>
-</div>
 {% endblock %}
